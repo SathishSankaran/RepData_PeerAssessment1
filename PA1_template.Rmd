@@ -33,6 +33,9 @@ steps_byday <- summarise(df_byday, steps = sum(steps))
 
 # Plot histogram
 hist(steps_byday$steps, breaks = 10, main = "Histogram of Daily Steps", xlab = "Daily Steps")
+dev.copy(png,"Histogram-DailySteps.png")
+dev.off()
+
 summary(steps_byday)
 ```
 
@@ -53,6 +56,8 @@ plot(steps_byinterval$interval, steps_byinterval$steps, type='l',
      main = "Avg no. of steps taken over all days",
      xlab = "Interval",
      ylab = "Avg no. of steps")
+dev.copy(png,"TimeSeries.png")
+dev.off()
 
 # Find interval containing max no. of steps
 maxrow <- which.max(steps_byinterval$steps)
@@ -102,6 +107,9 @@ steps_byday_imputed <- summarise(dfimputed_byday, steps = sum(steps))
 
 # Plot histogram
 hist(steps_byday_imputed$steps, breaks = 10, main = "Imputed Data - Histogram of Daily Steps", xlab = "Daily Steps")
+dev.copy(png,"Histogram-DailySteps-Imputed.png")
+dev.off()
+
 summary(steps_byday_imputed)
 ```
 
@@ -117,6 +125,8 @@ plot(steps_byinterval_imputed$interval, steps_byinterval_imputed$steps, type='l'
      main = "Imputed Data - Avg no. of steps taken over all days",
      xlab = "Interval",
      ylab = "Avg no. of steps")
+dev.copy(png,"TimeSeries-Imputed.png")
+dev.off()
 
 # Find interval containing max no. of steps
 maxrow <- which.max(steps_byinterval_imputed$steps)
@@ -147,11 +157,12 @@ steps_byinterval_imputed_byDayType <- aggregate(steps ~ interval + DayType, dfim
 
 # Plot time series
 library(ggplot2)
-p <- ggplot(steps_byinterval_imputed_byDayType, aes(x = interval, y = steps)) +
+ggplot(steps_byinterval_imputed_byDayType, aes(x = interval, y = steps)) +
     geom_line() +
     facet_grid(DayType ~ .) +
     ggtitle("Imputed Data - Avg no. of steps taken: Weekdays vs. Weekends") +
     xlab("Interval") +
     ylab("Avg no. of steps")
-p
+dev.copy(png,"Weekends_vs_Weekdays-Imputed.png")
+dev.off()
 ```
